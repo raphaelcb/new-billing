@@ -9,7 +9,7 @@ pipeline {
 	stages {
 		stage('Checkout Source') {
 			steps {
-				git url:'https://bitbucket.cpqd.com.br/scm/cbtelser/new-billing.git', branch:'master'
+				git url:'https://github.com/raphaelcb/new-billing.git', branch:'main'
 			}
 		}
 
