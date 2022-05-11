@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: billing-company-database
-        image: raphaelcb/billing-company-database:{{tag}}
+        image: raphaelcb/billing-company-database:latest
         imagePullPolicy: IfNotPresent
         resources:
           limits:

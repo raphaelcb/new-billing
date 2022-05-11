@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: billing-company-app
-        image: raphaelcb/billing-company-app:{{tag}}
+        image: raphaelcb/billing-company-app:latest
         imagePullPolicy: IfNotPresent
         resources:
           limits:
