@@ -1,0 +1,64 @@
+pipeline {
+	agent any
+
+	tools {
+		maven "maven-3.6.3"
+		jdk "jdk11"
+	}
+
+	stages {
+		stage('Checkout Source') {
+			steps {
+				git url:'https://bitbucket.cpqd.com.br/scm/cbtelser/new-billing.git', branch:'master'
+			}
+		}
+
+		stage('Build Source') {
+			steps {
+				dir("/var/lib/jenkins/workspace/billing-company/billing-company") {
+					sh 'mvn clean install'
+				}
+			}
+		}
+
+		stage('Build Docker App Image') {
+			steps {
+				script {
+					dockerapp = docker.build("raphaelcb/billing-company-app:${env.BUILD_ID}",
+								'-f ./Docker/company/billing-company-app-jenkins.dockerfile .')
+				}
+			}
+		}
+
+		stage('Push Docker App Image') {
+			steps {
+				script {
+					docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+						dockerapp.push('latest')
+						dockerapp.push("${env.BUILD_ID}")
+					}
+				}
+			}
+		}
+
+		stage('Build Docker Database Image') {
+			steps {
+				script {
+					dockerdatabase = docker.build("raphaelcb/billing-company-database:${env.BUILD_ID}",
+									 '-f ./Docker/company/billing-company-database-jenkins.dockerfile .')
+				}
+			}
+		}
+
+		stage('Push Docker Database Image') {
+			steps {
+				script {
+					docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+						dockerdatabase.push('latest')
+						dockerdatabase.push("${env.BUILD_ID}")
+					}
+				}
+			}
+		}
+	}
+}

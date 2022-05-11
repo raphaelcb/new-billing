@@ -1,0 +1,24 @@
+pipeline {
+	agent any
+
+	tools {
+		maven "maven-3.6.3"
+		jdk "jdk11"
+	}
+
+	stages {
+		stage('Checkout Source') {
+			steps {
+				git url:'https://bitbucket.cpqd.com.br/scm/cbtelser/new-billing.git', branch:'master'
+			}
+		}
+
+		stage('Build Source') {
+			steps {
+				dir("/var/lib/jenkins/workspace/billing-platform/billing-platform") {
+					sh 'mvn clean install'
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- CPqD Billing Comptech Rest Handler Exception Parent -->
+	<parent>
+		<groupId>br.com.cpqd.billing.comptech.rest.handler.exception</groupId>
+		<artifactId>rest-handler-exception-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../main/parent/pom.xml</relativePath> <!-- lookup parent from repository -->
+	</parent>
+
+	<artifactId>rest-handler-exception-core</artifactId>
+
+	<name>CPqD Billing Comptech Rest Handler Exception Core Module</name>
+	<description>CPqD Billing Comptech Rest Handler Exception Core Module</description>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- #################################### -->
+		<!-- Core Modules -->
+		<!-- #################################### -->
+
+		<!-- CPqD Billing Comptech Exception Core Module -->
+		<dependency>
+			<groupId>br.com.cpqd.billing.comptech.exception</groupId>
+			<artifactId>exception-core</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-customer-database
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customer-database
+  template:
+    metadata:
+      labels:
+        app: customer-database
+    spec:
+      containers:
+      - name: billing-customer-database
+        image: raphaelcb/billing-customer-database:1.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-customer-database
+spec:
+  type: NodePort
+  selector:
+    app: customer-database
+  ports:
+  - protocol: TCP
+    port: 5432
+    nodePort: 30000

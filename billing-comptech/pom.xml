@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- CPqD Billing Comptech Super Parent -->
+	<parent>
+		<groupId>br.com.cpqd.billing.comptech</groupId>
+		<artifactId>billing-comptech-super-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>./main/super-parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>billing-comptech</artifactId>
+	<packaging>pom</packaging>
+
+	<name>CPqD Billing Comptech POM</name>
+
+	<!-- Modules -->
+	<modules>
+		<module>main/super-parent</module>
+		<module>audit</module>
+		<module>cache</module>
+		<module>commons-entities</module>
+		<module>exception</module>
+		<module>locale</module>
+		<module>rest-handler-exception</module>
+		<module>security</module>
+	</modules>
+
+</project>

@@ -1,0 +1,30 @@
+# #########################################################################################
+# K8S Deployment to Billing - Customer microservice (Database)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-customer-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-database
+  template:
+    metadata:
+      labels:
+        app: customer-database
+    spec:
+      containers:
+      - name: billing-customer-database
+        image: raphaelcb/billing-customer-database:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432

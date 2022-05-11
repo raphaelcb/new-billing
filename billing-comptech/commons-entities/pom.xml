@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- CPqD Billing Comptech Super Parent -->
+	<parent>
+		<groupId>br.com.cpqd.billing.comptech</groupId>
+		<artifactId>billing-comptech-super-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../main/super-parent/pom.xml</relativePath> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>br.com.cpqd.billing.comptech.commons.entities</groupId>
+	<artifactId>commons-entities</artifactId>
+	<packaging>pom</packaging>
+
+	<name>CPqD Billing Comptech Commons Entities Component</name>
+
+	<!-- Modules -->
+	<modules>
+		<module>main/parent</module>
+		<module>commons-entities-entity</module>
+	</modules>
+
+</project>

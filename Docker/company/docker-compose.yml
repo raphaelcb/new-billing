@@ -1,0 +1,75 @@
+# #####################################################################
+# Docker compose for Billing Company
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #####################################################################
+
+# Docker Composer version
+version: '3.8'
+
+# The parts of the application
+services:
+    # Service name
+    company-database:
+        # How the service will be built
+        build:
+            # From a dockerfile
+            dockerfile: ./billing-company-database.dockerfile
+            # Dockerfile context
+            context: .
+        # Image name / version that will be built
+        image: billing/company-database:1.0
+        # Container name that will be built from image
+        container_name: billing-company-database
+        # Ports (host port:container port)
+        ports:
+            - "5435:5432"
+        # Network definition
+        networks:
+            - billing-company-network
+
+    # Service name
+    company-app:
+        # How the service will be built
+        build:
+            # From a dockerfile
+            dockerfile: ./billing-company-app.dockerfile
+            # Dockerfile context
+            context: .
+        # Image name / version that will be built
+        image: billing/company-app:1.0
+        # Container name that will be built from image
+        container_name: billing-company-app
+        # Definition of the environment variables to container
+        environment:
+            - CATALINA_OPTS=
+                -Xms2048m -Xmx4096m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true 
+                -XX:+UseStringDeduplication -XX:+OptimizeStringConcat 
+                -XX:+UseG1GC 
+                -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8087
+            - JAVA_OPTS=
+                -DAPP_LOG_ROOT=/opt/billing-company-app/log 
+                -DAPP_DB_HOME=/opt/billing-company-app 
+                -Dauth_method=database 
+                -Dauth_attempts=3 
+                -Djwt_issuer=QQ6p1dtXPbpt8TPBsITDqs8Fmx2xEMIB 
+                -Djwt_issuer_secret=6gqosbCRXfMrSTL4oxBEl4tlS1rIO73Q 
+                -Djwt_token_expiration=900
+                -Duser.Timezone=GMT-3 -Duser.language=pt -Duser.country=BR 
+        # Ports (host port:container port)
+        ports:
+            - "8082:8080"
+            - "8089:8087"
+        # Network definition
+        networks:
+            - billing-company-network
+        # Service dependencies
+        depends_on:
+            - company-database
+
+# Network definition
+networks:
+    # Network name
+    billing-company-network:
+        # Driver
+        driver: bridge

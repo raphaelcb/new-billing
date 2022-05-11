@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+	<!-- Properties -->
+	<Properties>
+		<Property name="LOG_PATTERN_CONSOLE">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} [%t] %-5level %logger{36} - %msg%n</Property>
+		<Property name="LOG_PATTERN_FILE">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5level - %msg%n</Property>
+	</Properties>
+
+	<!-- Appenders -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN_CONSOLE}"/>
+		</Console>
+
+		<RollingFile name="applicationCacheServiceLog" fileName="${sys:APP_LOG_ROOT}/cache-service.log" filePattern="${sys:APP_LOG_ROOT}/application-%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${LOG_PATTERN_FILE}"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="20000KB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10"/>
+		</RollingFile> 
+	</Appenders>
+
+	<!-- Loggers -->
+	<Loggers>
+		<Root additivity="false" level="info">
+			<AppenderRef ref="console" />
+		</Root>
+
+		<Logger name="br.com.cpqd.billing.comptech.cache.service.core" additivity="false" level="info">
+			<AppenderRef ref="applicationCacheServiceLog" />
+			<AppenderRef ref="console" />
+		</Logger>
+	</Loggers>
+
+</Configuration>

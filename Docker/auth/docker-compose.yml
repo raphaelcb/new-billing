@@ -1,0 +1,75 @@
+# #####################################################################
+# Docker compose for Billing Authentication and Authorization
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #####################################################################
+
+# Docker Composer version
+version: '3.8'
+
+# The parts of the application
+services:
+    # Service name
+    auth-database:
+        # How the service will be built
+        build:
+            # From a dockerfile
+            dockerfile: ./billing-auth-database.dockerfile
+            # Dockerfile context
+            context: .
+        # Image name / version that will be built
+        image: billing/auth-database:1.0
+        # Container name that will be built from image
+        container_name: billing-auth-database
+        # Ports (host port:container port)
+        ports:
+            - "5433:5432"
+        # Network definition
+        networks:
+            - billing-auth-network
+
+    # Service name
+    auth-app:
+        # How the service will be built
+        build:
+            # From a dockerfile
+            dockerfile: ./billing-auth-app.dockerfile
+            # Dockerfile context
+            context: .
+        # Image name / version that will be built
+        image: billing/auth-app:1.0
+        # Container name that will be built from image
+        container_name: billing-auth-app
+        # Definition of the environment variables to container
+        environment:
+            - CATALINA_OPTS=
+                -Xms2048m -Xmx4096m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true 
+                -XX:+UseStringDeduplication -XX:+OptimizeStringConcat 
+                -XX:+UseG1GC 
+                -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8087
+            - JAVA_OPTS=
+                -DAPP_LOG_ROOT=/opt/billing-auth-app/log 
+                -DAPP_DB_HOME=/opt/billing-auth-app 
+                -Dauth_method=database 
+                -Dauth_attempts=3 
+                -Djwt_issuer=QQ6p1dtXPbpt8TPBsITDqs8Fmx2xEMIB 
+                -Djwt_issuer_secret=6gqosbCRXfMrSTL4oxBEl4tlS1rIO73Q 
+                -Djwt_token_expiration=900
+                -Duser.Timezone=GMT-3 -Duser.language=pt -Duser.country=BR 
+        # Ports (host port:container port)
+        ports:
+            - "8080:8080"
+            - "8087:8087"
+        # Network definition
+        networks:
+            - billing-auth-network
+        # Service dependencies
+        depends_on:
+            - auth-database
+
+# Network definition
+networks:
+    # Network name
+    billing-auth-network:
+        # Driver
+        driver: bridge

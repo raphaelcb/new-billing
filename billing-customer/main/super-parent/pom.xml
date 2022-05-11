@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- CPqD Billing Platform Super Parent -->
+	<parent>
+		<groupId>br.com.cpqd.billing.platform</groupId>
+		<artifactId>billing-platform-super-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>br.com.cpqd.billing.customer</groupId>
+	<artifactId>customer-super-parent</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+
+	<name>CPqD Billing Customer Super Parent</name>
+
+	<!-- Properties -->
+	<properties>
+		<revision>1.0.0-SNAPSHOT</revision>
+	</properties>
+
+	<!-- Dependency Management -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- #################################### -->
+			<!-- Component Modules -->
+			<!-- #################################### -->
+
+			<!-- CPqD Billing Customer Entity Module -->
+			<dependency>
+				<groupId>br.com.cpqd.billing.customer</groupId>
+				<artifactId>customer-entity</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- CPqD Billing Customer DAO Module -->
+			<dependency>
+				<groupId>br.com.cpqd.billing.customer</groupId>
+				<artifactId>customer-dao</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- CPqD Billing Customer Service Module -->
+			<dependency>
+				<groupId>br.com.cpqd.billing.customer</groupId>
+				<artifactId>customer-service</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- #################################### -->
+			<!-- Core Modules -->
+			<!-- #################################### -->
+
+			<!-- CPqD Billing Comptech Locale Core Module -->
+			<dependency>
+				<groupId>br.com.cpqd.billing.comptech.locale</groupId>
+				<artifactId>locale-core</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- CPqD Billing Comptech Security Core Module -->
+			<dependency>
+				<groupId>br.com.cpqd.billing.comptech.security</groupId>
+				<artifactId>security-core</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- CPqD Billing Comptech Rest Handler Exception Core Module -->
+			<dependency>
+				<groupId>br.com.cpqd.billing.comptech.rest.handler.exception</groupId>
+				<artifactId>rest-handler-exception-core</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- Build -->  
+	<build>
+		<extensions>
+			<extension>
+				<groupId>fr.jcgay.maven.extension</groupId>
+				<artifactId>unique-revision-maven-filtering</artifactId>
+				<version>1.0</version>
+			</extension>
+		</extensions>
+	</build>
+
+</project>

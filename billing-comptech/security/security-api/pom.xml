@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- CPqD Billing Comptech Security Parent -->
+	<parent>
+		<groupId>br.com.cpqd.billing.comptech.security</groupId>
+		<artifactId>security-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../main/parent/pom.xml</relativePath> <!-- lookup parent from repository -->
+	</parent>
+
+	<artifactId>security-api</artifactId>
+
+	<name>CPqD Billing Comptech Security API Module</name>
+	<description>CPqD Billing Comptech Security API Module</description>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- #################################### -->
+		<!-- Component Modules -->
+		<!-- #################################### -->
+
+		<!-- CPqD Billing Comptech Security Core Module -->
+		<dependency>
+			<groupId>br.com.cpqd.billing.comptech.security</groupId>
+			<artifactId>security-core</artifactId>
+		</dependency>
+
+		<!-- CPqD Billing Comptech Security Service Module -->
+		<dependency>
+			<groupId>br.com.cpqd.billing.comptech.security</groupId>
+			<artifactId>security-service</artifactId>
+		</dependency>
+
+		<!-- #################################### -->
+		<!-- Core Modules -->
+		<!-- #################################### -->
+
+		<!-- CPqD Billing Comptech Audit Web Module -->
+		<dependency>
+			<groupId>br.com.cpqd.billing.comptech.audit</groupId>
+			<artifactId>audit-api</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

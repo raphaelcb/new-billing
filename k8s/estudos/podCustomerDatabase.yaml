@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: pod-customer-database
+spec:
+  containers:
+    - name: billing-customer-database
+      image: raphaelcb/billing-customer-database:1.0
+      ports:
+        - containerPort: 5432

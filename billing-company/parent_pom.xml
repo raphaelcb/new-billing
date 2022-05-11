@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.com.cpqd.billing.company</groupId>
+	<artifactId>company-parent</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+
+	<name>CPqD Billing Company Parent POM</name>
+
+	<!-- Properties -->
+	<properties>
+		<revision>1.0.0-SNAPSHOT</revision>
+	</properties>
+
+	<!-- Modules -->
+	<modules>
+		<module>main/super-parent</module>
+	</modules>
+
+	<!-- Distribution Management -->
+	<distributionManagement>
+		<repository>
+			<id>distribution.repo</id>
+			<name>CPqD Release Repository</name>
+			<url>https://artifactory.cpqd.com.br:8443/artifactory/cpqd-release</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+
+		<snapshotRepository>
+			<id>distribution.repo</id>
+			<name>CPqD Snapshot Repository</name>
+			<url>https://artifactory.cpqd.com.br:8443/artifactory/cpqd-snapshot</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
+</project>

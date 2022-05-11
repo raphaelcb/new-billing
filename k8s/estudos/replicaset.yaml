@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-customer-database
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: customer-database
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: customer-database
+        version: v1
+    spec:
+      containers:
+      - name: billing-customer-database
+        image: raphaelcb/billing-customer-database:1.0
+        ports:
+          - containerPort: 5432
+
+---
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-customer-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels: 
+      app: customer-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: customer-app
+        version: v1
+    spec:
+      containers:
+      - name: billing-customer-app
+        image: raphaelcb/billing-customer-app:1.0
+        ports:
+          - containerPort: 8080

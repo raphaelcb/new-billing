@@ -1,0 +1,30 @@
+# #########################################################################################
+# K8S Deployment to Billing - Authentication and Authorization microservice (Database)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-auth-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-database
+  template:
+    metadata:
+      labels:
+        app: auth-database
+    spec:
+      containers:
+      - name: billing-auth-database
+        image: raphaelcb/billing-auth-database:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432

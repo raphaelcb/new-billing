@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- CPqD Billing Company Super Parent -->
+	<parent>
+		<groupId>br.com.cpqd.billing.company</groupId>
+		<artifactId>company-super-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>./main/super-parent/pom.xml</relativePath> 
+	</parent>
+
+	<artifactId>billing-company</artifactId>
+	<packaging>pom</packaging>
+
+	<name>CPqD Billing Company POM</name>
+
+	<!-- Modules -->
+	<modules>
+		<module>main/super-parent</module>
+		<module>company-entity</module>
+		<module>company-dao</module>
+		<module>company-service</module>
+		<module>company-api</module>
+	</modules>
+
+</project>

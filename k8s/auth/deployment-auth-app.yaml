@@ -1,0 +1,50 @@
+# #########################################################################################
+# K8S Deployment to Billing - Authentication and Authorization microservice (App)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-auth-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-app
+  template:
+    metadata:
+      labels:
+        app: auth-app
+    spec:
+      containers:
+      - name: billing-auth-app
+        image: raphaelcb/billing-auth-app:{{tag}}
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        env:
+          - name: CATALINA_OPTS
+            value: "-Xms2048m -Xmx4096m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true -XX:+UseStringDeduplication 
+                    -XX:+OptimizeStringConcat 
+                    -XX:+UseG1GC 
+                    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8087"
+          - name: JAVA_OPTS
+            value: "-DAPP_LOG_ROOT=/opt/billing-auth-app/log 
+                    -DAPP_DB_HOME=/opt/billing-auth-app 
+                    -Dauth_method=database 
+                    -Dauth_attempts=3 
+                    -Djwt_issuer=kMRZmzW3qZLXOtdIDrImOpX8LfYzsIF4 
+                    -Djwt_issuer_secret=WzicsW1GfyaJoq7puEUc7CBehG2zZgcc 
+                    -Djwt_token_expiration=900
+                    -Duser.Timezone=GMT-3 
+                    -Duser.language=pt 
+                    -Duser.country=BR"
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8087
+          name: debug
