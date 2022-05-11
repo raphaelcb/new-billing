@@ -1,5 +1,5 @@
 # #########################################################################################
-# K8S Deployment to Billing - Customer microservice (App)
+# K8S Deployment to Billing - Company microservice (App)
 # @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
 # @since 1.0
 # #########################################################################################
@@ -7,20 +7,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-customer-app
+  name: deployment-company-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: customer-app
+      app: company-app
   template:
     metadata:
       labels:
-        app: customer-app
+        app: company-app
     spec:
       containers:
-      - name: billing-customer-app
-        image: raphaelcb/billing-customer-app:latest
+      - name: billing-company-app
+        image: raphaelcb/billing-company-app:{{tag}}
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -31,14 +31,14 @@ spec:
             value: "-Xms2048m -Xmx4096m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true -XX:+UseStringDeduplication 
                     -XX:+OptimizeStringConcat 
                     -XX:+UseG1GC 
-                    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8088"
+                    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8089"
           - name: JAVA_OPTS
-            value: "-DAPP_LOG_ROOT=/opt/billing-customer-app/log 
-                    -DAPP_DB_HOME=/opt/billing-customer-app 
+            value: "-DAPP_LOG_ROOT=/opt/billing-company-app/log 
+                    -DAPP_DB_HOME=/opt/billing-company-app 
                     -Dauth_method=database 
                     -Dauth_attempts=3 
-                    -Djwt_issuer=kMRZmzW3qZLXOtdIDrImOpX8LfYzsIF4 
-                    -Djwt_issuer_secret=WzicsW1GfyaJoq7puEUc7CBehG2zZgcc 
+                    -Djwt_issuer=QQ6p1dtXPbpt8TPBsITDqs8Fmx2xEMIB 
+                    -Djwt_issuer_secret=6gqosbCRXfMrSTL4oxBEl4tlS1rIO73Q 
                     -Djwt_token_expiration=900
                     -Duser.Timezone=GMT-3 
                     -Duser.language=pt 
@@ -46,5 +46,5 @@ spec:
         ports:
         - containerPort: 8080
           name: http
-        - containerPort: 8088
+        - containerPort: 8089
           name: debug

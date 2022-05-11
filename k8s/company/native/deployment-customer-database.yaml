@@ -1,0 +1,30 @@
+# #########################################################################################
+# K8S Deployment to Billing - Company microservice (Database)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-company-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: company-database
+  template:
+    metadata:
+      labels:
+        app: company-database
+    spec:
+      containers:
+      - name: billing-company-database
+        image: raphaelcb/billing-company-database:{{tag}}
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432

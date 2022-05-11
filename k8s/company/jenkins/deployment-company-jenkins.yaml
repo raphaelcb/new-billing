@@ -1,0 +1,130 @@
+# #########################################################################################
+# K8S Deployment to Billing - Company microservice (Database)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-company-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: company-database
+  template:
+    metadata:
+      labels:
+        app: company-database
+    spec:
+      containers:
+      - name: billing-company-database
+        image: raphaelcb/billing-company-database:{{tag}}
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+
+---
+
+# #########################################################################################
+# K8S Deployment to Billing - Company microservice (App)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-company-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: company-app
+  template:
+    metadata:
+      labels:
+        app: company-app
+    spec:
+      containers:
+      - name: billing-company-app
+        image: raphaelcb/billing-company-app:{{tag}}
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        env:
+          - name: CATALINA_OPTS
+            value: "-Xms2048m -Xmx4096m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true -XX:+UseStringDeduplication 
+                    -XX:+OptimizeStringConcat 
+                    -XX:+UseG1GC 
+                    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8089"
+          - name: JAVA_OPTS
+            value: "-DAPP_LOG_ROOT=/opt/billing-company-app/log 
+                    -DAPP_DB_HOME=/opt/billing-company-app 
+                    -Dauth_method=database 
+                    -Dauth_attempts=3 
+                    -Djwt_issuer=QQ6p1dtXPbpt8TPBsITDqs8Fmx2xEMIB 
+                    -Djwt_issuer_secret=6gqosbCRXfMrSTL4oxBEl4tlS1rIO73Q 
+                    -Djwt_token_expiration=900
+                    -Duser.Timezone=GMT-3 
+                    -Duser.language=pt 
+                    -Duser.country=BR"
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8089
+          name: debug
+
+---
+
+# #########################################################################################
+# K8S Service to Billing - Company microservice (Database)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-company-database
+spec:
+  type: NodePort
+  selector:
+    app: company-database
+  ports:
+  - protocol: TCP
+    port: 5432
+    nodePort: 30035
+
+---
+
+# #########################################################################################
+# K8S Service to Billing - Company microservice (App)
+# @author Barbosa, Raphael de Carvalho - raphaelb@cpqd.com.br
+# @since 1.0
+# #########################################################################################
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-company-app
+spec:
+  type: NodePort
+  selector:
+    app: company-app
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    nodePort: 30002
+  - name: debug
+    protocol: TCP
+    port: 8089
+    nodePort: 30089

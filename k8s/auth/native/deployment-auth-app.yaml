@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: billing-auth-app
-        image: raphaelcb/billing-auth-app:{{tag}}
+        image: raphaelcb/billing-auth-app:latest
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -37,8 +37,8 @@ spec:
                     -DAPP_DB_HOME=/opt/billing-auth-app 
                     -Dauth_method=database 
                     -Dauth_attempts=3 
-                    -Djwt_issuer=kMRZmzW3qZLXOtdIDrImOpX8LfYzsIF4 
-                    -Djwt_issuer_secret=WzicsW1GfyaJoq7puEUc7CBehG2zZgcc 
+                    -Djwt_issuer=QQ6p1dtXPbpt8TPBsITDqs8Fmx2xEMIB 
+                    -Djwt_issuer_secret=6gqosbCRXfMrSTL4oxBEl4tlS1rIO73Q 
                     -Djwt_token_expiration=900
                     -Duser.Timezone=GMT-3 
                     -Duser.language=pt 
