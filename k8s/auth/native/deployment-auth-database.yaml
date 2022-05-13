@@ -22,6 +22,8 @@ spec:
       - name: billing-auth-database
         image: raphaelcb/billing-auth-database:latest
         imagePullPolicy: IfNotPresent
+        serviceAccountName: build-robot
+        automountServiceAccountToken: false
         resources:
           limits:
             memory: "128Mi"
