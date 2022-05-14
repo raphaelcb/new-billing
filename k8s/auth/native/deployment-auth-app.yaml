@@ -18,12 +18,12 @@ spec:
       labels:
         app: auth-app
     spec:
+      serviceAccountName: build-robot
+      automountServiceAccountToken: false
       containers:
       - name: billing-auth-app
         image: raphaelcb/billing-auth-app:latest
         imagePullPolicy: IfNotPresent
-        serviceAccountName: build-robot
-        automountServiceAccountToken: false
         resources:
           limits:
             memory: "512Mi"
