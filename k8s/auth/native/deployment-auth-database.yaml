@@ -9,6 +9,8 @@ kind: Deployment
 metadata:
   name: deployment-auth-database
 spec:
+  serviceAccountName: build-robot
+  automountServiceAccountToken: false
   replicas: 1
   selector:
     matchLabels:
@@ -18,8 +20,6 @@ spec:
       labels:
         app: auth-database
     spec:
-      serviceAccountName: build-robot
-      automountServiceAccountToken: false
       containers:
       - name: billing-auth-database
         image: raphaelcb/billing-auth-database:latest
